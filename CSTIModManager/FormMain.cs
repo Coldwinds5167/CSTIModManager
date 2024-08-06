@@ -109,7 +109,7 @@ namespace CSTIModManager
         private void LoadRequiredPlugins()
         {
             CheckVersion();
-            UpdateStatus("获取发行更新...");
+            UpdateStatus("获取Mod信息...");
             LoadReleases();
             this.Invoke((MethodInvoker)(() =>
             {//Invoke so we can call from current thread
@@ -158,7 +158,7 @@ namespace CSTIModManager
 
             }));
            
-            UpdateStatus("发行信息更新完成!");
+            UpdateStatus("Mod信息获取成功!");
 
         }
 
@@ -189,6 +189,14 @@ namespace CSTIModManager
             UpdateStatus("开始安装队列...");
             foreach (ReleaseInfo release in releases)
             {
+                if (release.Name == "BepInEx")
+                {
+                    if (Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx")))
+                    {
+                        continue;
+                    }
+                }
+
                 if (release.Install)
                 {
                     UpdateStatus(string.Format("正在下载...{0}", release.Name));
@@ -217,7 +225,16 @@ namespace CSTIModManager
                     }
                     else
                     {
-                        UnzipFile(file, (release.InstallLocation != null) ? Path.Combine(InstallDirectory, release.InstallLocation) : InstallDirectory);
+                        string dir;
+                        if (release.InstallLocation == null)
+                        {
+                            dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+                        }
+                        else
+                        {
+                            dir = Path.Combine(InstallDirectory, release.InstallLocation);
+                        }
+                        UnzipFile(file, dir);
                     }
                     UpdateStatus(string.Format("安装 {0}!", release.Name));
                 }

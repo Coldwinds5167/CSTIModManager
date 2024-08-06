@@ -1,0 +1,11 @@
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\bin\Release\CSTIModManager.exe.config
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\bin\Release\CSTIModManager.exe
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\bin\Release\CSTIModManager.pdb
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.csproj.AssemblyReference.cache
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.FormMain.resources
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.FormSelectPlatform.resources
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.Properties.Resources.resources
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.csproj.GenerateResource.cache
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.csproj.CoreCompileInputs.cache
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.exe
+C:\Users\yiget\Desktop\cstimod-manager\CSTIModManager\obj\Release\CSTIModManager.pdb
