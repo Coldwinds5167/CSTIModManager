@@ -601,7 +601,7 @@ namespace CSTIModManager
         private void CheckVersion()
         {
             UpdateStatus("检查更新中...");
-            Int16 version = Convert.ToInt16(DownloadSite("https://gitee.com/Cold_winds/cstimod-manager/raw/master/update.txt"));
+            Int16 version = Convert.ToInt16(DownloadSite("https://gitee.com/Cold_winds/cstimod-manager/raw/master/update.xml"));
             if (version > CurrentVersion)
             {
                 this.Invoke((MethodInvoker)(() =>
