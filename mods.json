@@ -1,0 +1,54 @@
+{
+	"mods" : [
+	  {
+		"name": "BepInEx",
+		"author": "BepInEx Team",
+		"version": "5.4.22.2",
+		"git_path": "BepInEx/BepInEx",
+		"group": "Core",
+		"download_url": "https://github.com/BepInEx/BepInEx/releases/download/v5.4.22/BepInEx_x64_5.4.22.0.zip"
+	  },
+	  {
+		"name": "后天",
+		"author": "Coldwinds",
+		"version": "0.3.2",
+		"dependencies": [
+		  "BepInEx"
+		],
+		"git_path": "Cold_winds/the-day-after-tomorrow",
+		"group": "综合类",
+		"download_url": "https://gitee.com/Cold_winds/the-day-after-tomorrow/releases/download/0.3.2/%E5%90%8E%E5%A4%A9-v0.3.2%E8%AF%B7%E8%A7%A3%E5%8E%8B%E4%BD%BF%E7%94%A8(%E9%9C%80%E8%A6%81%E6%96%B0%E7%89%88modloader).zip"
+	  },
+	  "name": "扭蛋机",
+		"author": "Coldwinds",
+		"version": "1.2.2",
+		"dependencies": [
+		  "BepInEx"
+		],
+		"git_path": "Cold_winds/gacha-machine",
+		"group": "物品类",
+		"download_url": "https://gitee.com/Cold_winds/gacha-machine/releases/download/1.2.2/%E6%89%AD%E8%9B%8B%E6%9C%BA-v1.2.2%EF%BC%88%E8%AF%B7%E8%A7%A3%E5%8E%8B%E4%BD%BF%E7%94%A8%EF%BC%89.zip"
+	],
+   "groups" : [
+	  {
+		"name" : "Core",
+		"rank" : 0
+	  },
+	  {
+		"name" : "综合类",
+		"rank" : 1
+	  },
+	  {
+		"name" : "物品类",
+		"rank" : 2
+	  },
+	  {
+		"name" : "Tweaks / Tools",
+		"rank" : 3
+	  },
+	  {
+		"name" : "Libraries",
+		"rank" : 4
+	  }
+	]
+}
