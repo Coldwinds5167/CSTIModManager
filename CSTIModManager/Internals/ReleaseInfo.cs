@@ -11,6 +11,7 @@ namespace CSTIModManager.Internals
         public string Version;
         public string Link;
         public string Name;
+        public string ModName;
         public string Author;
         public string GitPath;
         public string Tag;
@@ -18,11 +19,14 @@ namespace CSTIModManager.Internals
         public string InstallLocation;
         public int ReleaseId;
         public bool Install = true;
+        public bool isInstalled = false;
+        public bool isable = true;
         public List<string> Dependencies = new List<string>();
         public List<string> Dependents = new List<string>();
-        public ReleaseInfo(string _name, string _author, string _version, string _group, string _link, string _installLocation, string _gitPath, JSONArray dependencies)
+        public ReleaseInfo(string _name, string _modname, string _author, string _version, string _group, string _link, string _installLocation, string _gitPath, JSONArray dependencies)
         {
             Name = _name;
+            ModName = _modname;
             Author = _author;
             Version = _version;
             Group = _group;

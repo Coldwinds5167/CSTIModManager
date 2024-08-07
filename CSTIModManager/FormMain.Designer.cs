@@ -105,7 +105,7 @@
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(112, 23);
             this.buttonInstall.TabIndex = 4;
-            this.buttonInstall.Text = "安装 / 更新";
+            this.buttonInstall.Text = "安装";
             this.buttonInstall.UseVisualStyleBackColor = true;
             this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
             // 
@@ -163,7 +163,7 @@
             this.listViewMods.UseCompatibleStateImageBehavior = false;
             this.listViewMods.View = System.Windows.Forms.View.Details;
             this.listViewMods.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewMods_ItemChecked);
-            this.listViewMods.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewMods_ItemSelectionChanged);
+            //this.listViewMods.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewMods_ItemSelectionChanged);
             this.listViewMods.DoubleClick += new System.EventHandler(this.listViewMods_DoubleClick);
             // 
             // columnHeaderName
@@ -237,7 +237,7 @@
             this.buttonOpenWiki.Name = "buttonOpenWiki";
             this.buttonOpenWiki.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenWiki.TabIndex = 9;
-            this.buttonOpenWiki.Text = "Check out the guides!";
+            this.buttonOpenWiki.Text = "查看wiki";
             this.buttonOpenWiki.UseVisualStyleBackColor = true;
             this.buttonOpenWiki.Click += new System.EventHandler(this.buttonOpenWiki_Click);
             // 
@@ -279,7 +279,7 @@
             this.buttonOpenConfig.Name = "buttonOpenConfig";
             this.buttonOpenConfig.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenConfig.TabIndex = 5;
-            this.buttonOpenConfig.Text = "Config目录";
+            this.buttonOpenConfig.Text = "Log目录";
             this.buttonOpenConfig.UseVisualStyleBackColor = true;
             this.buttonOpenConfig.Click += new System.EventHandler(this.buttonOpenConfigFolder_Click);
             // 
@@ -360,7 +360,7 @@
             this.buttonModInfo.Name = "buttonModInfo";
             this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
             this.buttonModInfo.TabIndex = 9;
-            this.buttonModInfo.Text = "查看Mods信息";
+            this.buttonModInfo.Text = "删除Mods";
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
@@ -372,7 +372,7 @@
             this.buttonToggleMods.Name = "buttonToggleMods";
             this.buttonToggleMods.Size = new System.Drawing.Size(112, 23);
             this.buttonToggleMods.TabIndex = 10;
-            this.buttonToggleMods.Text = "禁用Mods";
+            this.buttonToggleMods.Text = "禁用/启用Mods";
             this.buttonToggleMods.UseVisualStyleBackColor = true;
             this.buttonToggleMods.Click += new System.EventHandler(this.buttonToggleMods_Click);
             // 
