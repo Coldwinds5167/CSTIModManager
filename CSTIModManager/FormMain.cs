@@ -144,6 +144,7 @@ namespace CSTIModManager
         private void LoadRequiredPlugins()
         {
             CheckVersion();
+            CheckBepinex();
             UpdateStatus("获取Mod信息...");
             LoadReleases();
             LoadLocalMods();
@@ -721,6 +722,45 @@ namespace CSTIModManager
                     Process.GetCurrentProcess().Kill();
                     Environment.Exit(0);
                 }));
+            }
+        }
+
+        private void CheckBepinex()
+        {
+            string download_url =
+                "https://gitee.com/Cold_winds/BepInEx/releases/download/5.4.22.0/BepInEx_x64_5.4.22.0%EF%BC%88%E8%A7%A3%E5%8E%8B%E5%88%B0%E6%B8%B8%E6%88%8F%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%89.zip";
+            string dir = InstallDirectory;
+            if (Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx")))
+            {
+                return;
+            }
+            var confirmResult1 = MessageBox.Show(
+                "未检测到BepInEx!\n\n是否安装？",
+                "未检测到BepInEx",
+                MessageBoxButtons.YesNo);
+
+            if (confirmResult1 == DialogResult.Yes)
+            {
+                var confirmResult2 = MessageBox.Show(
+                    "安装过程中会启动一次游戏，\n\n请等待游戏加载完成后再关闭!\n\n是否继续？",
+                    "提示",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult2 == DialogResult.Yes)
+                {
+                    byte[] file = DownloadFile(download_url);
+                    UpdateStatus(string.Format("正在安装...BepInEx"));
+                    string fileName = Path.GetFileName(download_url);
+                    UnzipFile(file, dir);
+                    Process.Start(Path.Combine(InstallDirectory, @"Card Survival - Tropical Island.exe"));
+                }
+                else
+                {
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+            else
+            {
+                Process.GetCurrentProcess().Kill();
             }
         }
 
