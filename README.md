@@ -22,7 +22,7 @@
 
 第一次打开管理器时，如果在默认路径下没找到游戏，就需要指定游戏安装目录，在弹出来的界面中，选择游戏可执行文件`Card Survival - Tropical Island.exe`
 
-![QQ截图20240807162752](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807162752.png)
+![QQ截图20240807162752.png](http://photos.szpt.top/i/2024/08/12/66b8e8d8805a2.png)
 
 #### 安装mod
 
@@ -30,19 +30,19 @@
 
 > 可以在左下角查看当前安装进度。
 
-![QQ截图20240807163245](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807163245.png)
+![QQ截图20240807163245.png](http://photos.szpt.top/i/2024/08/12/66b8e8d8496e4.png)
 
-![QQ截图20240807163616](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807163616.png)
+![QQ截图20240807163616.png](http://photos.szpt.top/i/2024/08/12/66b8e8d8cab94.png)
 
 #### 删除mod
 
 勾选想要删除的mod，然后点击删除
 
-![QQ截图20240807163700](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807163700.png)
+![QQ截图20240807163700.png](http://photos.szpt.top/i/2024/08/12/66b8e8d92424e.png)
 
-![QQ截图20240807163900](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807163900.png)
+![QQ截图20240807163900.png](http://photos.szpt.top/i/2024/08/12/66b8e8de9ea33.png)
 
-![QQ截图20240807164228](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807164228.png)
+![QQ截图20240807164228.png](http://photos.szpt.top/i/2024/08/12/66b8e8d8c7232.png)
 
 #### 禁用mod
 
@@ -50,21 +50,21 @@
 
 选择一个已安装的mod，点击禁用mod。
 
-![QQ截图20240807164408](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807164408.png)
+![QQ截图20240807164408.png](http://photos.szpt.top/i/2024/08/12/66b8e8ddde165.png)
 
-![QQ截图20240807164506](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807164506.png)
+![QQ截图20240807164506.png](http://photos.szpt.top/i/2024/08/12/66b8e8de4bf43.png)
 
 #### 启用mod
 
 勾选一个已禁用的mod，点击启用mod。
 
-![QQ截图20240807164614](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807164614.png)
+![QQ截图20240807164614.png](http://photos.szpt.top/i/2024/08/12/66b8e8dd76db2.png)
 
-![QQ截图20240807164710](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807164710.png)
+![QQ截图20240807164710.png](http://photos.szpt.top/i/2024/08/12/66b8e8d8f1fc8.png)
 
 #### 更多功能
 
-![QQ截图20240807165005](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807165005.png)
+![QQ截图20240807165005.png](http://photos.szpt.top/i/2024/08/12/66b8e8d9329ff.png)
 
 ### Mod作者
 
@@ -74,31 +74,31 @@
 
 在gitee注册账号，进入个人中心后，点击右上角+号，新建仓库。
 
-![QQ截图20240807165355](C:\Users\Viper\Desktop\CSTIMod管理器\picture\QQ截图20240807165355.png)
+![QQ截图20240807165355.png](http://photos.szpt.top/i/2024/08/12/66b8e8db58bd1.png)
 
 输入仓库名称（最好是mod名）
 
-![D22DE8590D32AAC49698608EA2C35834](C:\Users\Viper\Desktop\CSTIMod管理器\picture\D22DE8590D32AAC49698608EA2C35834.png)
+![D22DE8590D32AAC49698608EA2C35834.png](http://photos.szpt.top/i/2024/08/12/66b8e8d758236.png)
 
 新建仓库完成后，点击`初始化readme文件`。
 
-![999446e50efcd265f2d5fc8e63d3dc78](C:\Users\Viper\Desktop\CSTIMod管理器\picture\999446e50efcd265f2d5fc8e63d3dc78.png)
+![999446e50efcd265f2d5fc8e63d3dc78.png](http://photos.szpt.top/i/2024/08/12/66b8e8dd0cddf.png)
 
 点击右侧发行版的创建。
 
-![4c15c073c7950e103a23d4087ccd1f0c](C:\Users\Viper\Desktop\CSTIMod管理器\picture\4c15c073c7950e103a23d4087ccd1f0c.png)
+![4c15c073c7950e103a23d4087ccd1f0c.png](http://photos.szpt.top/i/2024/08/12/66b8e8d96173a.png)
 
 输入mod版本号，并上传mod压缩包文件，点击创建。
 
-![8f82c50803c38eae9c7482d5b3a80ca1](C:\Users\Viper\Desktop\CSTIMod管理器\picture\8f82c50803c38eae9c7482d5b3a80ca1.png)
+![8f82c50803c38eae9c7482d5b3a80ca1.png](http://photos.szpt.top/i/2024/08/12/66b8e8d848c63.png)
 
 出现如下界面说明创建成功。
 
-![ae876af190f137e3f390732a69a9485d](C:\Users\Viper\Desktop\CSTIMod管理器\picture\ae876af190f137e3f390732a69a9485d.png)
+![ae876af190f137e3f390732a69a9485d.png](http://photos.szpt.top/i/2024/08/12/66b8e8d87526f.png)
 
 将该界面的网址私发给Coldwinds(825592085)，我给你添加进mod管理器。
 
-![6fa18c99cc0f8eddfeb214d463845eeb](C:\Users\Viper\Desktop\CSTIMod管理器\picture\6fa18c99cc0f8eddfeb214d463845eeb.png)
+![6fa18c99cc0f8eddfeb214d463845eeb.png](http://photos.szpt.top/i/2024/08/12/66b8e8d960663.png)
 
 ##### 更新mod
 
