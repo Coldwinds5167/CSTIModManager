@@ -10,9 +10,10 @@ using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Forms.VisualStyles;
 using CSTIModManager.Internals;
 using CSTIModManager.Internals.SimpleJSON;
+using Microsoft.Win32;
+using Mono.Cecil;
 
 namespace CSTIModManager
 {
@@ -20,7 +21,7 @@ namespace CSTIModManager
     {
 
         private const string BaseEndpoint = "https://gitee.com/api/v5/repos/";
-        private const Int16 CurrentVersion = 2;
+        private const Int16 CurrentVersion = 5;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
@@ -79,7 +80,11 @@ namespace CSTIModManager
             for (int i = 0; i < allMods.Count; i++)
             {
                 JSONNode current = allMods[i];
-                ReleaseInfo release = new ReleaseInfo(current["name"], current["modname"], current["author"], current["version"], current["group"], current["download_url"], current["install_location"], current["git_path"], current["dependencies"].AsArray);
+                ReleaseInfo release = new ReleaseInfo(current["name"], current["modname"], current["author"], current["version"], current["group"], current["download_url"], current["install_location"], current["git_path"], current["dependencies"].AsArray, current["contain_dll"], current["only_dll"]);
+                if (release.ContainDll)
+                {
+                    release.DllName = current["dll_name"];
+                }
                 //UpdateReleaseInfo(ref release);
                 releases.Add(release);
             }
@@ -119,6 +124,43 @@ namespace CSTIModManager
             }
         }
 
+        private void LoadLocalDlls()
+        {
+                string dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+                var files = Directory.GetFiles(dir, "*.dll*", SearchOption.AllDirectories);
+                foreach (var dllPath in files)
+                {
+                    try
+                    {
+                        var readPar = new ReaderParameters { ReadSymbols = false };
+                        using (AssemblyDefinition ad = AssemblyDefinition.ReadAssembly(dllPath, readPar))
+                        {
+                            string fullName = ad.Name.Name;
+                            foreach (var release in releases)
+                            {
+                                if (fullName == release.DllName)
+                                {
+                                    release.isInstalled = true;
+                                    if (release.OnlyDll)
+                                    {
+                                        release.InstallLocation = Path.GetDirectoryName(dllPath);
+
+                                        if (Path.GetFileName(dllPath).Contains(".dll.disable"))
+                                        {
+                                            release.isable = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    { 
+                        ;
+                    }
+                }
+        }
+
         private void LoadLocalMods()
         {
             string dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
@@ -148,6 +190,7 @@ namespace CSTIModManager
             UpdateStatus("获取Mod信息...");
             LoadReleases();
             LoadLocalMods();
+            LoadLocalDlls();
             this.Invoke((MethodInvoker)(() =>
             {//Invoke so we can call from current thread
              //Update checkbox's text
@@ -258,44 +301,22 @@ namespace CSTIModManager
                     byte[] file = DownloadFile(release.Link);
                     UpdateStatus(string.Format("正在安装...{0}", release.Name));
                     string fileName = Path.GetFileName(release.Link);
-                    if (Path.GetExtension(fileName).Equals(".dll"))
+                    string dir;
+                    if (release.InstallLocation == null)
                     {
-                        string dir;
-                        if (release.InstallLocation == null)
-                        {
-                            dir = Path.Combine(InstallDirectory, @"BepInEx\plugins", Regex.Replace(release.Name, @"\s+", string.Empty));
-                            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                        }
-                        else
-                        {
-                            dir = Path.Combine(InstallDirectory, release.InstallLocation);
-                        }
-                        File.WriteAllBytes(Path.Combine(dir, fileName), file);
-
-                        var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
-                        if (File.Exists(dllFile))
-                        {
-                            File.Delete(dllFile);
-                        }
+                        dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
                     }
                     else
                     {
-                        string dir;
-                        if (release.InstallLocation == null)
-                        {
-                            dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
-                        }
-                        else
-                        {
-                            dir = Path.Combine(InstallDirectory, release.InstallLocation);
-                        }
-                        UnzipFile(file, dir);
+                        dir = Path.Combine(InstallDirectory, release.InstallLocation);
                     }
+
+                    UnzipFile(file, dir);
                     modlist[release.Name].Text += " (已安装)";
                     release.isInstalled = true;
                     UpdateStatus(string.Format("安装 {0}!", release.Name));
                 }
-                
+
             }
             UpdateStatus("安装完成!");
             ChangeInstallButtonState(true);
@@ -920,24 +941,82 @@ namespace CSTIModManager
                         {
                             if (release.isable)
                             {
-                                File.Move(Path.Combine(release.InstallLocation, "ModInfo.json"),
-                                    Path.Combine(release.InstallLocation, "ModInfo.disable"));
-                                release.isable = false;
-                                if (modlist.ContainsKey(release.Name))
+                                if (!release.OnlyDll)
                                 {
-                                    modlist[release.Name].Text += " (已禁用)";
+                                    File.Move(Path.Combine(release.InstallLocation, "ModInfo.json"),
+                                        Path.Combine(release.InstallLocation, "ModInfo.disable"));
+                                    release.isable = false;
+                                    if (modlist.ContainsKey(release.Name))
+                                    {
+                                        modlist[release.Name].Text += " (已禁用)";
+                                    }
+                                }
+                                else
+                                {
+                                    var files = Directory.GetFiles(release.InstallLocation, "*.dll",
+                                        SearchOption.AllDirectories);
+                                    foreach (var dll in files)
+                                    {
+                                        File.Move(dll,
+                                            dll.Replace(".dll", ".dll.disable"));
+                                    }
+
+                                    release.isable = false;
+                                    if (modlist.ContainsKey(release.Name))
+                                    {
+                                        modlist[release.Name].Text += " (已禁用)";
+                                    }
+                                }
+                                if (release.ContainDll && !release.OnlyDll)
+                                {
+                                    var files = Directory.GetFiles(release.InstallLocation, "*.dll",
+                                        SearchOption.AllDirectories);
+                                    foreach (var dll in files)
+                                    {
+                                        File.Move(dll,
+                                            dll.Replace(".dll", ".dll.disable"));
+                                    }
                                 }
 
                                 UpdateStatus("禁用mod!");
                             }
                             else
                             {
-                                File.Move(Path.Combine(release.InstallLocation, "ModInfo.disable"),
-                                    Path.Combine(release.InstallLocation, "ModInfo.json"));
-                                release.isable = true;
-                                if (modlist.ContainsKey(release.Name))
+                                if (!release.OnlyDll)
                                 {
-                                    modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                    File.Move(Path.Combine(release.InstallLocation, "ModInfo.disable"),
+                                        Path.Combine(release.InstallLocation, "ModInfo.json"));
+                                    release.isable = true;
+                                    if (modlist.ContainsKey(release.Name))
+                                    {
+                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                    }
+                                }
+                                else
+                                {
+                                    var files = Directory.GetFiles(release.InstallLocation, "*.dll*",
+                                        SearchOption.AllDirectories);
+                                    foreach (var dll in files)
+                                    {
+                                        File.Move(dll,
+                                            dll.Replace(".dll.disable", ".dll"));
+                                    }
+
+                                    release.isable = true;
+                                    if (modlist.ContainsKey(release.Name))
+                                    {
+                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                    }
+                                }
+                                if (release.ContainDll)
+                                {
+                                    var files = Directory.GetFiles(release.InstallLocation, "*.dll*",
+                                        SearchOption.AllDirectories);
+                                    foreach (var dll in files)
+                                    {
+                                        File.Move(dll,
+                                            dll.Replace(".dll.disable", ".dll"));
+                                    }
                                 }
 
                                 UpdateStatus("启用mod!");
@@ -948,7 +1027,7 @@ namespace CSTIModManager
             }
             catch (Exception ex)
             {
-                ;
+                MessageBox.Show(ex.ToString(), "错误!", MessageBoxButtons.OK, MessageBoxIcon.Error);;
             }
         }
     }

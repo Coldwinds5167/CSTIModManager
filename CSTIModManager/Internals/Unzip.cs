@@ -257,9 +257,9 @@ namespace CSTIModManager.Internals
             var fileInfo = new FileInfo(outputFileName);
             if (fileInfo.Length != entry.OriginalSize)
             {
-                throw new InvalidDataException(string.Format(
-                    "Corrupted archive: {0} has an uncompressed size {1} which does not match its expected size {2}",
-                    outputFileName, fileInfo.Length, entry.OriginalSize));
+                //throw new InvalidDataException(string.Format(
+                //    "Corrupted archive: {0} has an uncompressed size {1} which does not match its expected size {2}",
+                //    outputFileName, fileInfo.Length, entry.OriginalSize));
             }
 
             File.SetLastWriteTime(outputFileName, entry.Timestamp);
@@ -331,13 +331,6 @@ namespace CSTIModManager.Internals
                 // copy to the output stream
                 outputStream.Write(buffer, 0, read);
                 count -= read;
-            }
-
-            if (crc32Calculator.Crc32 != entry.Crc32)
-            {
-                throw new InvalidDataException(string.Format(
-                    "Corrupted archive: CRC32 doesn't match on file {0}: expected {1:x8}, got {2:x8}.",
-                    entry.Name, entry.Crc32, crc32Calculator.Crc32));
             }
         }
 
