@@ -21,7 +21,7 @@ namespace CSTIModManager
     {
 
         private const string BaseEndpoint = "https://gitee.com/api/v5/repos/";
-        private const Int16 CurrentVersion = 5;
+        private const Int16 CurrentVersion = 6;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
@@ -282,9 +282,14 @@ namespace CSTIModManager
             UpdateStatus("开始安装队列...");
             foreach (ReleaseInfo release in releases)
             {
-                if (release.Name == "BepInEx" || release.Name == "Modloader")
+                if (release.Name == "BepInEx")
                 {
-                    if (Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx")) || Directory.Exists(Path.Combine(InstallDirectory, @"Modloader")))
+                    continue;
+                }
+                
+                if (release.Name == "Modloader")
+                {
+                    if (Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\CSTI-Modloader"))||Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\Modloader")))
                     {
                         continue;
                     }
