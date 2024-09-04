@@ -9,6 +9,7 @@ namespace CSTIModManager.Internals
     public class ReleaseInfo
     {
         public string Version;
+        public string LocalVersion = "0.0.0";
         public string Link;
         public string Name;
         public string ModName;

@@ -39,6 +39,8 @@
             this.Plugins = new System.Windows.Forms.TabPage();
             this.listViewMods = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLocalVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +97,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "游戏路径:";
+            this.label1.Text = "Game Path:";
             // 
             // buttonInstall
             // 
@@ -105,7 +107,7 @@
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(112, 23);
             this.buttonInstall.TabIndex = 4;
-            this.buttonInstall.Text = "安装";
+            this.buttonInstall.Text = "Install/Update";
             this.buttonInstall.UseVisualStyleBackColor = true;
             this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
             // 
@@ -117,7 +119,7 @@
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(66, 13);
             this.labelStatus.TabIndex = 5;
-            this.labelStatus.Text = "状态: Null";
+            this.labelStatus.Text = "Status: Null";
             // 
             // tabControlMain
             // 
@@ -152,7 +154,9 @@
             this.listViewMods.CheckBoxes = true;
             this.listViewMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
-            this.columnHeaderAuthor});
+            this.columnHeaderAuthor,
+            this.columnHeaderVersion,
+            this.columnHeaderLocalVersion});
             this.listViewMods.ContextMenuStrip = this.contextMenuStripMain;
             this.listViewMods.FullRowSelect = true;
             this.listViewMods.HideSelection = false;
@@ -168,13 +172,23 @@
             // 
             // columnHeaderName
             // 
-            this.columnHeaderName.Text = "名称";
-            this.columnHeaderName.Width = 321;
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 200;
+            // 
+            // columnHeaderVersion
+            // 
+            this.columnHeaderVersion.Text = "Cloud Ver.";
+            this.columnHeaderVersion.Width = 75;
+            // 
+            // columnHeaderLocalVersion
+            // 
+            this.columnHeaderLocalVersion.Text = "Local Ver.";
+            this.columnHeaderLocalVersion.Width = 75;
             // 
             // columnHeaderAuthor
             // 
-            this.columnHeaderAuthor.Text = "作者";
-            this.columnHeaderAuthor.Width = 162;
+            this.columnHeaderAuthor.Text = "Author";
+            this.columnHeaderAuthor.Width = 125;
             // 
             // contextMenuStripMain
             // 
@@ -187,7 +201,7 @@
             // 
             this.viewInfoToolStripMenuItem.Name = "viewInfoToolStripMenuItem";
             this.viewInfoToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.viewInfoToolStripMenuItem.Text = "查看信息";
+            this.viewInfoToolStripMenuItem.Text = "Look Information";
             this.viewInfoToolStripMenuItem.Click += new System.EventHandler(this.viewInfoToolStripMenuItem_Click);
             // 
             // Utilities
@@ -237,7 +251,7 @@
             this.buttonOpenWiki.Name = "buttonOpenWiki";
             this.buttonOpenWiki.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenWiki.TabIndex = 9;
-            this.buttonOpenWiki.Text = "查看wiki";
+            this.buttonOpenWiki.Text = "Look wiki";
             this.buttonOpenWiki.UseVisualStyleBackColor = true;
             this.buttonOpenWiki.Click += new System.EventHandler(this.buttonOpenWiki_Click);
             // 
@@ -247,7 +261,7 @@
             this.buttonDiscordLink.Name = "buttonDiscordLink";
             this.buttonDiscordLink.Size = new System.Drawing.Size(134, 23);
             this.buttonDiscordLink.TabIndex = 8;
-            this.buttonDiscordLink.Text = "加入Discord!";
+            this.buttonDiscordLink.Text = "Join Discord!";
             this.buttonDiscordLink.UseVisualStyleBackColor = true;
             this.buttonDiscordLink.Click += new System.EventHandler(this.buttonDiscordLink_Click);
             // 
@@ -269,7 +283,7 @@
             this.buttonBepInEx.Name = "buttonBepInEx";
             this.buttonBepInEx.Size = new System.Drawing.Size(134, 23);
             this.buttonBepInEx.TabIndex = 5;
-            this.buttonBepInEx.Text = "BepInEx目录";
+            this.buttonBepInEx.Text = "BepInEx Path";
             this.buttonBepInEx.UseVisualStyleBackColor = true;
             this.buttonBepInEx.Click += new System.EventHandler(this.buttonOpenBepInExFolder_Click);
             // 
@@ -279,7 +293,7 @@
             this.buttonOpenConfig.Name = "buttonOpenConfig";
             this.buttonOpenConfig.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenConfig.TabIndex = 5;
-            this.buttonOpenConfig.Text = "Log目录";
+            this.buttonOpenConfig.Text = "Log Path";
             this.buttonOpenConfig.UseVisualStyleBackColor = true;
             this.buttonOpenConfig.Click += new System.EventHandler(this.buttonOpenConfigFolder_Click);
             // 
@@ -289,7 +303,7 @@
             this.buttonOpenGameFolder.Name = "buttonOpenGameFolder";
             this.buttonOpenGameFolder.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenGameFolder.TabIndex = 5;
-            this.buttonOpenGameFolder.Text = "游戏目录";
+            this.buttonOpenGameFolder.Text = "Game Path";
             this.buttonOpenGameFolder.UseVisualStyleBackColor = true;
             this.buttonOpenGameFolder.Click += new System.EventHandler(this.buttonOpenGameFolder_Click);
             // 
@@ -300,7 +314,7 @@
             this.labelOpen.Name = "labelOpen";
             this.labelOpen.Size = new System.Drawing.Size(99, 13);
             this.labelOpen.TabIndex = 6;
-            this.labelOpen.Text = "重要路径";
+            this.labelOpen.Text = "Important Path";
             // 
             // buttonRestoreCosmetics
             // 
@@ -308,7 +322,7 @@
             this.buttonRestoreCosmetics.Name = "buttonRestoreCosmetics";
             this.buttonRestoreCosmetics.Size = new System.Drawing.Size(132, 37);
             this.buttonRestoreCosmetics.TabIndex = 4;
-            this.buttonRestoreCosmetics.Text = "暂时无用";
+            this.buttonRestoreCosmetics.Text = "None";
             this.buttonRestoreCosmetics.UseVisualStyleBackColor = true;
             this.buttonRestoreCosmetics.Click += new System.EventHandler(this.buttonRestoreCosmetics_Click);
             // 
@@ -318,7 +332,7 @@
             this.buttonRestoreMods.Name = "buttonRestoreMods";
             this.buttonRestoreMods.Size = new System.Drawing.Size(132, 37);
             this.buttonRestoreMods.TabIndex = 3;
-            this.buttonRestoreMods.Text = "从备份中恢复Mods";
+            this.buttonRestoreMods.Text = "Restore Mods from Backup";
             this.buttonRestoreMods.UseVisualStyleBackColor = true;
             this.buttonRestoreMods.Click += new System.EventHandler(this.buttonRestoreMods_Click);
             // 
@@ -328,7 +342,7 @@
             this.buttonBackupCosmetics.Name = "buttonBackupCosmetics";
             this.buttonBackupCosmetics.Size = new System.Drawing.Size(132, 23);
             this.buttonBackupCosmetics.TabIndex = 2;
-            this.buttonBackupCosmetics.Text = "暂时无用";
+            this.buttonBackupCosmetics.Text = "None";
             this.buttonBackupCosmetics.UseVisualStyleBackColor = true;
             this.buttonBackupCosmetics.Click += new System.EventHandler(this.buttonBackupCosmetics_Click);
             // 
@@ -338,7 +352,7 @@
             this.buttonBackupMods.Name = "buttonBackupMods";
             this.buttonBackupMods.Size = new System.Drawing.Size(132, 23);
             this.buttonBackupMods.TabIndex = 1;
-            this.buttonBackupMods.Text = "备份Mods";
+            this.buttonBackupMods.Text = "Backup Mods";
             this.buttonBackupMods.UseVisualStyleBackColor = true;
             this.buttonBackupMods.Click += new System.EventHandler(this.buttonBackupMods_Click);
             // 
@@ -348,7 +362,7 @@
             this.buttonUninstallAll.Name = "buttonUninstallAll";
             this.buttonUninstallAll.Size = new System.Drawing.Size(132, 23);
             this.buttonUninstallAll.TabIndex = 0;
-            this.buttonUninstallAll.Text = "删除所有Mods";
+            this.buttonUninstallAll.Text = "Delete All Mods";
             this.buttonUninstallAll.UseVisualStyleBackColor = true;
             this.buttonUninstallAll.Click += new System.EventHandler(this.buttonUninstallAll_Click);
             // 
@@ -360,7 +374,7 @@
             this.buttonModInfo.Name = "buttonModInfo";
             this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
             this.buttonModInfo.TabIndex = 9;
-            this.buttonModInfo.Text = "删除Mods";
+            this.buttonModInfo.Text = "Delete Mods";
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
@@ -372,7 +386,7 @@
             this.buttonToggleMods.Name = "buttonToggleMods";
             this.buttonToggleMods.Size = new System.Drawing.Size(112, 23);
             this.buttonToggleMods.TabIndex = 10;
-            this.buttonToggleMods.Text = "禁用/启用Mods";
+            this.buttonToggleMods.Text = "Disable/Enable Mods";
             this.buttonToggleMods.UseVisualStyleBackColor = true;
             this.buttonToggleMods.Click += new System.EventHandler(this.buttonToggleMods_Click);
             // 
@@ -419,6 +433,8 @@
         private System.Windows.Forms.TabPage Plugins;
         private System.Windows.Forms.ListView listViewMods;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ColumnHeader columnHeaderVersion;
+        private System.Windows.Forms.ColumnHeader columnHeaderLocalVersion;
         private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
         private System.Windows.Forms.ToolStripMenuItem viewInfoToolStripMenuItem;

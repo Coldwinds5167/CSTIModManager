@@ -21,7 +21,7 @@ namespace CSTIModManager
     {
 
         private const string BaseEndpoint = "https://gitee.com/api/v5/repos/";
-        private const Int16 CurrentVersion = 6;
+        private const Int16 CurrentVersion = 10;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
@@ -45,7 +45,7 @@ namespace CSTIModManager
             {
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
                 {
-                    buttonToggleMods.Text = "启用Mods";
+                    buttonToggleMods.Text = "Enable Mods";
                     buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;
                     buttonToggleMods.Enabled = true;
                 }
@@ -123,6 +123,16 @@ namespace CSTIModManager
                 }
             }
         }
+        
+        private void WriteJson(string dir, JSONNode json)
+        {
+            using (var file = File.Open(dir, FileMode.Create))
+            {
+                Byte[] bytes = Encoding.UTF8.GetBytes(json.ToString());
+                file.Write(bytes, 0, bytes.Length);
+                file.Flush();
+            }
+        }
 
         private void LoadLocalDlls()
         {
@@ -144,7 +154,7 @@ namespace CSTIModManager
                                     if (release.OnlyDll)
                                     {
                                         release.InstallLocation = Path.GetDirectoryName(dllPath);
-
+                                        release.LocalVersion = ad.Name.Version.ToString();
                                         if (Path.GetFileName(dllPath).Contains(".dll.disable"))
                                         {
                                             release.isable = false;
@@ -178,6 +188,11 @@ namespace CSTIModManager
                         {
                             release.isable = false;
                         }
+
+                        if (json["Version"] != "1.0.0")
+                        {
+                            release.LocalVersion = json["Version"];
+                        }
                     }
                 }
             }
@@ -187,7 +202,7 @@ namespace CSTIModManager
         {
             CheckVersion();
             CheckBepinex();
-            UpdateStatus("获取Mod信息...");
+            UpdateStatus("Get Mod Info...");
             LoadReleases();
             LoadLocalMods();
             LoadLocalDlls();
@@ -208,19 +223,21 @@ namespace CSTIModManager
                     ListViewItem item = new ListViewItem();
                     item.Text = release.Name;
                     if (!String.IsNullOrEmpty(release.Version))
-                        item.Text = $"{release.Name} - {release.Version}";
+                        item.Text = $"{release.Name}";
                     if (release.isInstalled)
                     {
-                        item.Text += " (已安装)";
+                        item.Text += " (Installed)";
                     }
 
                     if (!release.isable)
                     {
-                        item.Text += " (已禁用)";
+                        item.Text += " (Disabled)";
                     }
 
                     if (!String.IsNullOrEmpty(release.Tag)) { item.Text = string.Format("{0} - ({1})",release.Name, release.Tag); };
                     item.SubItems.Add(release.Author);
+                    item.SubItems.Add(release.Version);
+                    item.SubItems.Add(release.LocalVersion);
                     item.Tag = release;
                     if (release.Install)
                     {
@@ -251,7 +268,7 @@ namespace CSTIModManager
 
             }));
            
-            UpdateStatus("Mod信息获取成功!");
+            UpdateStatus("Mod info get success!");
 
         }
 
@@ -279,7 +296,7 @@ namespace CSTIModManager
         private void Install()
         {
             ChangeInstallButtonState(false);
-            UpdateStatus("开始安装队列...");
+            UpdateStatus("Start installing queues...");
             foreach (ReleaseInfo release in releases)
             {
                 if (release.Name == "BepInEx")
@@ -295,16 +312,38 @@ namespace CSTIModManager
                     }
                 }
 
-                if (release.isInstalled)
-                {
-                    continue;
-                }
-
                 if (release.Install)
                 {
-                    UpdateStatus(string.Format("正在下载...{0}", release.Name));
+                    if (release.isInstalled)
+                    {
+                        try
+                        {
+                            if (release.OnlyDll)
+                            {
+                                continue;
+                            }
+
+                            Version version1 = new Version(release.Version);
+                            Version version2 = new Version(release.LocalVersion);
+                            if (version1 <= version2)
+                            {
+                                continue;
+                            }
+
+
+                            Directory.Delete(release.InstallLocation, true);
+                            release.isInstalled = false;
+                            release.InstallLocation = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
+                    }
+                    
+                    UpdateStatus(string.Format("Downloading...{0}", release.Name));
                     byte[] file = DownloadFile(release.Link);
-                    UpdateStatus(string.Format("正在安装...{0}", release.Name));
+                    UpdateStatus(string.Format("Installing...{0}", release.Name));
                     string fileName = Path.GetFileName(release.Link);
                     string dir;
                     if (release.InstallLocation == null)
@@ -317,19 +356,46 @@ namespace CSTIModManager
                     }
 
                     UnzipFile(file, dir);
-                    modlist[release.Name].Text += " (已安装)";
+                    modlist[release.Name].Text += " (Installed)";
+                    modlist[release.Name].SubItems.RemoveAt(modlist[release.Name].SubItems.Count - 1);
+                    modlist[release.Name].SubItems.Add(release.Version);
                     release.isInstalled = true;
-                    UpdateStatus(string.Format("安装 {0}!", release.Name));
+                    if (!release.OnlyDll)
+                    {
+                        WriteVersion(release);
+                    }
+                    UpdateStatus(string.Format("Installing {0}!", release.Name));
                 }
 
             }
-            UpdateStatus("安装完成!");
+            LoadLocalMods();
+            LoadLocalDlls();
+            UpdateStatus("Install success!");
             ChangeInstallButtonState(true);
-
+            clearModCheck();
             this.Invoke((MethodInvoker)(() =>
             { //Invoke so we can call from any thread
                 buttonToggleMods.Enabled = true;
             }));
+        }
+
+        private void WriteVersion(ReleaseInfo release)
+        {
+            JSONNode tmpjson = string.Empty;
+            string dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+            var files = Directory.GetFiles(dir, "ModInfo.*", SearchOption.AllDirectories);
+            foreach (var modinfo in files)
+            {
+                var json = JSON.Parse(ReadJson(modinfo));
+                if (json["Name"] == release.ModName)
+                {
+                    tmpjson = json;
+                    dir = modinfo;
+                    tmpjson["Version"] = release.Version;
+                    release.LocalVersion = release.Version;
+                    WriteJson(dir, tmpjson);
+                }
+            }
         }
 
         #endregion // Installation
@@ -361,7 +427,7 @@ namespace CSTIModManager
                     }
                     else
                     {
-                        MessageBox.Show("这不是 Card Survival - Tropical Island.exe! 请重试!", "错误!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("This is not Card Survival - Tropical Island.exe! Please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -372,16 +438,41 @@ namespace CSTIModManager
         private void listViewMods_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             ReleaseInfo release = (ReleaseInfo)e.Item.Tag;
-
-            if (release.isInstalled && e.Item.Checked)
+            try
             {
-                buttonModInfo.Enabled = true;
-                buttonInstall.Enabled = false;
+                Version version1 = new Version(release.Version);
+                Version version2 = new Version(release.LocalVersion);
+                if (release.isInstalled && e.Item.Checked)
+                {
+                    if (version1 > version2)
+                    {
+                        buttonModInfo.Enabled = true;
+                        buttonInstall.Enabled = true;
+                    }
+                    else
+                    {
+                        buttonModInfo.Enabled = true;
+                        buttonInstall.Enabled = false;   
+                    }
+                }
+                else
+                {
+                    buttonModInfo.Enabled = false;
+                    buttonInstall.Enabled = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                buttonModInfo.Enabled = false;
-                buttonInstall.Enabled = true;
+                if (release.isInstalled && e.Item.Checked)
+                {
+                    buttonModInfo.Enabled = true;
+                    buttonInstall.Enabled = false;
+                }
+                else
+                {
+                    buttonModInfo.Enabled = false;
+                    buttonInstall.Enabled = true;
+                }
             }
 
             if (release.Dependencies.Count > 0)
@@ -422,13 +513,23 @@ namespace CSTIModManager
                 }
             }
 
-            if (release.Name.Contains("BepInEx")) { e.Item.Checked = true; };
+            if (release.Name.Contains("BepInEx"))
+            {
+                e.Item.Checked = true;
+            }
+
+            ;
             release.Install = e.Item.Checked;
-            if (release.Name.Contains("Modloader")) { e.Item.Checked = true; };
+            if (release.Name.Contains("Modloader"))
+            {
+                e.Item.Checked = true;
+            }
+
+            ;
             release.Install = e.Item.Checked;
         }
 
-         private void listViewMods_DoubleClick(object sender, EventArgs e)
+        private void listViewMods_DoubleClick(object sender, EventArgs e)
         {
             OpenLinkFromRelease();
         }
@@ -436,13 +537,13 @@ namespace CSTIModManager
         private void buttonModInfo_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show(
-                "你正在尝试删除所选Mods文件. 该操作不可撤销!\n\n你确定要继续吗?",
-                "确认删除",
+                "You are attempting to delete the selected Mods file. This operation cannot be undone! \n\nAre you sure you want to continue?",
+                "Confirm deletion",
                 MessageBoxButtons.YesNo);
 
             if (confirmResult == DialogResult.Yes)
             {
-                UpdateStatus("删除mod!");
+                UpdateStatus("delete mod!");
                 foreach (var release in releases)
                 {
                     if (release.Install)
@@ -451,25 +552,32 @@ namespace CSTIModManager
                         {
                             continue;
                         }
+                        else if (release.InstallLocation == Path.Combine(InstallDirectory, @"BepInEx\plugins"))
+                        {
+                            continue;
+                        }
                         else
                         {
                             try
                             {
                                 Directory.Delete(release.InstallLocation, true);
-                                modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已安装)", "");
-                                modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (Installed)", "");
+                                modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (Disabled)", "");
                                 release.isInstalled = false;
-                                release.InstallLocation = string.Empty;
+                                release.InstallLocation = null;
+                                modlist[release.Name].SubItems.RemoveAt(modlist[release.Name].SubItems.Count - 1);
+                                modlist[release.Name].SubItems.Add("0.0.0");
                             }
                             catch (Exception ex)
                             {
-                                ;
+                                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
                 }
+                clearModCheck();
             }
-            UpdateStatus("删除完成!");
+            UpdateStatus("delete success!");
         }
 
         private void viewInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -480,13 +588,13 @@ namespace CSTIModManager
         private void buttonUninstallAll_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show(
-                "你正在尝试删除所有Mods文件 (包括前置文件). 该操作不可撤销!\n\n你确定要继续吗?",
-                "确认删除",
+                "You are attempting to delete all Mods files (including predecessors). This operation cannot be undone! \n\nAre you sure you want to continue?",
+                "Confirm deletion",
                 MessageBoxButtons.YesNo);
 
             if (confirmResult == DialogResult.Yes)
             {
-                UpdateStatus("正在删除所有Mods.");
+                UpdateStatus("deleting all Mods.");
 
                 var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
 
@@ -504,12 +612,12 @@ namespace CSTIModManager
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("发生未知错误!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    UpdateStatus("删除Mods失败.");
+                    MessageBox.Show("An unknown error occurred!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UpdateStatus("delete Mods failed.");
                     return;
                 }
 
-                UpdateStatus("所有Mods删除成功!");
+                UpdateStatus("All Mods delete success!");
             }
         }
 
@@ -522,12 +630,12 @@ namespace CSTIModManager
                 InitialDirectory = InstallDirectory,
                 FileName = $"Mod Backup",
                 Filter = "ZIP Folder (.zip)|*.zip",
-                Title = "备份Mods文件"
+                Title = "Backup Mods File"
             };
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK && saveFileDialog.FileName != "")
             {
-                UpdateStatus("备份Mods文件中...");
+                UpdateStatus("Backup Mods File...");
                 try
                 {
                     if (File.Exists(saveFileDialog.FileName)) File.Delete(saveFileDialog.FileName);
@@ -535,11 +643,11 @@ namespace CSTIModManager
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("发生未知错误!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    UpdateStatus("备份Mods文件失败.");
+                    MessageBox.Show("An unknown error occurred!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UpdateStatus("Backup Mods failed.");
                     return;
                 }
-                UpdateStatus("备份Mods文件成功!");
+                UpdateStatus("Backup Mods success!");
             }
 
 
@@ -562,14 +670,14 @@ namespace CSTIModManager
                 {
                     if (!Path.GetExtension(fileDialog.FileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        MessageBox.Show("包含无效文件!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("恢复Mods文件失败.");
+                        MessageBox.Show("Includes invalid files!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        UpdateStatus("restore Mods failed.");
                         return;
                     }
                     var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
                     try
                     {
-                        UpdateStatus("恢复Mods中...");
+                        UpdateStatus("restoring Mods...");
                         using (var archive = ZipFile.OpenRead(fileDialog.FileName))
                         {
                             foreach (var entry in archive.Entries)
@@ -583,12 +691,12 @@ namespace CSTIModManager
                                 entry.ExtractToFile(Path.Combine(pluginsPath, entry.FullName), true);
                             }
                         }
-                        UpdateStatus("成功恢复Mods文件!");
+                        UpdateStatus("restore Mods success!");
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("发生未知错误!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("恢复Mods文件失败.");
+                        MessageBox.Show("An unknown error occurred!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        UpdateStatus("restore Mods failed.");
                     }
                 }
             }
@@ -597,6 +705,14 @@ namespace CSTIModManager
         private void buttonRestoreCosmetics_Click(object sender, EventArgs e)
         {
             return;
+        }
+
+        private void clearModCheck()
+        {
+            foreach (var item in modlist)
+            {
+                item.Value.Checked = false;
+            }
         }
 
         #region Folders
@@ -665,11 +781,11 @@ namespace CSTIModManager
             {
                 if (ex.Message.Contains("403"))
                 {
-                    MessageBox.Show("获取更新信息失败，请稍后重试", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to get update information, please try again later", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("获取更新信息失败，请检查您的网络连接", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to get update information, please check your internet connection", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Process.GetCurrentProcess().Kill();
                 return null;
@@ -696,7 +812,7 @@ namespace CSTIModManager
 
         private void UpdateStatus(string status)
         {
-            string formattedText = string.Format("状态: {0}", status);
+            string formattedText = string.Format("Status: {0}", status);
             this.Invoke((MethodInvoker)(() =>
             { //Invoke so we can call from any thread
                 labelStatus.Text = formattedText;
@@ -724,7 +840,7 @@ namespace CSTIModManager
                         }
                         else
                         {
-                            MessageBox.Show("这不是Card Survival - Tropical Island.exe!请重新添加！", "错误!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("This is not Card Survival - Tropical Island.exe! Please try again！", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -737,14 +853,14 @@ namespace CSTIModManager
 
         private void CheckVersion()
         {
-            UpdateStatus("检查更新中...");
+            UpdateStatus("Checking for updates...");
             Int16 version = Convert.ToInt16(DownloadSite("https://gitee.com/Cold_winds/cstimod-manager/raw/master/update.json"));
             if (version > CurrentVersion)
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    MessageBox.Show("检测到有版本更新，请使用新版本", "有新的更新可用!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    Process.Start("https://gitee.com/Cold_winds/cstimod-manager/releases/latest");
+                    MessageBox.Show("A version update has been detected, please use the new version", "New Version!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Process.Start("https://github.com/Coldwinds5167/CSTIModManager/releases/latest");
                     Process.GetCurrentProcess().Kill();
                     Environment.Exit(0);
                 }));
@@ -754,27 +870,27 @@ namespace CSTIModManager
         private void CheckBepinex()
         {
             string download_url =
-                "https://gitee.com/Cold_winds/BepInEx/releases/download/5.4.22.0/BepInEx_x64_5.4.22.0%EF%BC%88%E8%A7%A3%E5%8E%8B%E5%88%B0%E6%B8%B8%E6%88%8F%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%89.zip";
+                "https://github.com/BepInEx/BepInEx/releases/download/v5.4.22/BepInEx_x64_5.4.22.0.zip";
             string dir = InstallDirectory;
             if (Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx")))
             {
                 return;
             }
             var confirmResult1 = MessageBox.Show(
-                "未检测到BepInEx!\n\n是否安装？",
-                "未检测到BepInEx",
+                "BepInEx not detected!\n\nInstalled or not？",
+                "BepInEx not detected",
                 MessageBoxButtons.YesNo);
 
             if (confirmResult1 == DialogResult.Yes)
             {
                 var confirmResult2 = MessageBox.Show(
-                    "安装过程中会启动一次游戏，\n\n请等待游戏加载完成后再关闭!\n\n是否继续？",
-                    "提示",
+                    "The game will start once during installation, \n\nPlease wait for the game to finish loading before closing! \n\nDoes it continue?",
+                    "Hint",
                     MessageBoxButtons.YesNo);
                 if (confirmResult2 == DialogResult.Yes)
                 {
                     byte[] file = DownloadFile(download_url);
-                    UpdateStatus(string.Format("正在安装...BepInEx"));
+                    UpdateStatus(string.Format("Installing...BepInEx"));
                     string fileName = Path.GetFileName(download_url);
                     UnzipFile(file, dir);
                     Process.Start(Path.Combine(InstallDirectory, @"Card Survival - Tropical Island.exe"));
@@ -803,7 +919,7 @@ namespace CSTIModManager
             if (listViewMods.SelectedItems.Count > 0)
             {
                 ReleaseInfo release = (ReleaseInfo)listViewMods.SelectedItems[0].Tag;
-                UpdateStatus($"打开gitee页面 {release.Name}");
+                UpdateStatus($"Open gitee Page {release.Name}");
                 Process.Start(string.Format("https://gitee.com/{0}", release.GitPath));
             }
             
@@ -942,7 +1058,7 @@ namespace CSTIModManager
                         {
                             continue;
                         }
-                        else
+                        else if(release.isInstalled)
                         {
                             if (release.isable)
                             {
@@ -953,7 +1069,7 @@ namespace CSTIModManager
                                     release.isable = false;
                                     if (modlist.ContainsKey(release.Name))
                                     {
-                                        modlist[release.Name].Text += " (已禁用)";
+                                        modlist[release.Name].Text += " (Disabled)";
                                     }
                                 }
                                 else
@@ -969,7 +1085,7 @@ namespace CSTIModManager
                                     release.isable = false;
                                     if (modlist.ContainsKey(release.Name))
                                     {
-                                        modlist[release.Name].Text += " (已禁用)";
+                                        modlist[release.Name].Text += " (Disabled)";
                                     }
                                 }
                                 if (release.ContainDll && !release.OnlyDll)
@@ -983,7 +1099,7 @@ namespace CSTIModManager
                                     }
                                 }
 
-                                UpdateStatus("禁用mod!");
+                                UpdateStatus("disable mod!");
                             }
                             else
                             {
@@ -994,7 +1110,7 @@ namespace CSTIModManager
                                     release.isable = true;
                                     if (modlist.ContainsKey(release.Name))
                                     {
-                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (Disabled)", "");
                                     }
                                 }
                                 else
@@ -1010,7 +1126,7 @@ namespace CSTIModManager
                                     release.isable = true;
                                     if (modlist.ContainsKey(release.Name))
                                     {
-                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (已禁用)", "");
+                                        modlist[release.Name].Text = modlist[release.Name].Text.Replace(" (Disabled)", "");
                                     }
                                 }
                                 if (release.ContainDll)
@@ -1024,15 +1140,16 @@ namespace CSTIModManager
                                     }
                                 }
 
-                                UpdateStatus("启用mod!");
+                                UpdateStatus("enable mod!");
                             }
                         }
                     }
                 }
+                clearModCheck();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "错误!", MessageBoxButtons.OK, MessageBoxIcon.Error);;
+                MessageBox.Show(ex.ToString(), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);;
             }
         }
     }

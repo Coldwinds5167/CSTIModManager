@@ -123,9 +123,6 @@
 	"name": "BepInEx",
     "modname": "BepInEx",
     "author": "BepInEx Team",
-    "contain_dll": true,
-	"only_dll": true,
-	"dll_name": "Add Hand Slot",
     "version": "5.4.22.0",
     "git_path": "BepInEx/BepInEx",
     "group": "前置类",
@@ -138,12 +135,6 @@
 > modname：必须为mod文件夹中的modinfo.json中的name。
 >
 > author：作者。
->
-> contain_dll：该mod中包含dll文件。
->
-> only_dll：该mod中只存在dll文件（不需要modloader）
->
-> dll_name：如果包含dll文件，请填写该dll的AssemblyTitle，如果有多个dll，填写其中一个即可（如无dll，该条可删除）。
 >
 > version：版本号。
 >
