@@ -31,17 +31,26 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.textBoxDirectory = new System.Windows.Forms.TextBox();
+            this.textBoxDirectory2 = new System.Windows.Forms.TextBox();
             this.buttonFolderBrowser = new System.Windows.Forms.Button();
+            this.buttonFolderBrowser2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.buttonInstall = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
             this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.Plugins = new System.Windows.Forms.TabPage();
-            this.listViewMods = new System.Windows.Forms.ListView();
-            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLocalVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CSTI = new System.Windows.Forms.TabPage();
+            this.CSFF = new System.Windows.Forms.TabPage();
+            this.listViewModsCSTI = new System.Windows.Forms.ListView();
+            this.listViewModsCSFF = new System.Windows.Forms.ListView();
+            this.columnHeaderNameCSTI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderVersionCSTI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLocalVersionCSTI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderAuthorCSTI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderNameCSFF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderAuthorCSFF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderVersionCSFF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLocalVersionCSFF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Utilities = new System.Windows.Forms.TabPage();
@@ -50,19 +59,13 @@
             this.buttonOpenWiki = new System.Windows.Forms.Button();
             this.buttonDiscordLink = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.buttonBepInEx = new System.Windows.Forms.Button();
-            this.buttonOpenConfig = new System.Windows.Forms.Button();
-            this.buttonOpenGameFolder = new System.Windows.Forms.Button();
+            this.buttonOpenLogFolderCSFF = new System.Windows.Forms.Button();
+            this.buttonOpenLogFolderCSTI = new System.Windows.Forms.Button();
             this.labelOpen = new System.Windows.Forms.Label();
-            this.buttonRestoreCosmetics = new System.Windows.Forms.Button();
-            this.buttonRestoreMods = new System.Windows.Forms.Button();
-            this.buttonBackupCosmetics = new System.Windows.Forms.Button();
-            this.buttonBackupMods = new System.Windows.Forms.Button();
-            this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.buttonModInfo = new System.Windows.Forms.Button();
             this.buttonToggleMods = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
-            this.Plugins.SuspendLayout();
+            this.CSTI.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
             this.Utilities.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -88,7 +91,7 @@
             this.buttonFolderBrowser.TabIndex = 1;
             this.buttonFolderBrowser.Text = "..";
             this.buttonFolderBrowser.UseVisualStyleBackColor = true;
-            this.buttonFolderBrowser.Click += new System.EventHandler(this.buttonFolderBrowser_Click);
+            this.buttonFolderBrowser.Click += new System.EventHandler(this.buttonFolderBrowserCSTI_Click);
             // 
             // label1
             // 
@@ -97,17 +100,47 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Game Path:";
+            this.label1.Text = "热带岛屿游戏路径:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(127, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "奇幻森林游戏路径:";
+            // 
+            // textBoxDirectory2
+            // 
+            this.textBoxDirectory2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDirectory2.Enabled = false;
+            this.textBoxDirectory2.Location = new System.Drawing.Point(10, 70);
+            this.textBoxDirectory2.Name = "textBoxDirectory2";
+            this.textBoxDirectory2.Size = new System.Drawing.Size(508, 22);
+            this.textBoxDirectory2.TabIndex = 0;
+            // 
+            // buttonFolderBrowser2
+            // 
+            this.buttonFolderBrowser2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFolderBrowser2.Location = new System.Drawing.Point(524, 70);
+            this.buttonFolderBrowser2.Name = "buttonFolderBrowser2";
+            this.buttonFolderBrowser2.Size = new System.Drawing.Size(26, 23);
+            this.buttonFolderBrowser2.TabIndex = 1;
+            this.buttonFolderBrowser2.Text = "..";
+            this.buttonFolderBrowser2.UseVisualStyleBackColor = true;
+            this.buttonFolderBrowser2.Click += new System.EventHandler(this.buttonFolderBrowserCSFF_Click);
             // 
             // buttonInstall
             // 
             this.buttonInstall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonInstall.Enabled = false;
-            this.buttonInstall.Location = new System.Drawing.Point(440, 341);
+            this.buttonInstall.Location = new System.Drawing.Point(440, 376);
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(112, 23);
             this.buttonInstall.TabIndex = 4;
-            this.buttonInstall.Text = "Install/Update";
+            this.buttonInstall.Text = "安装/更新";
             this.buttonInstall.UseVisualStyleBackColor = true;
             this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
             // 
@@ -115,80 +148,81 @@
             // 
             this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(7, 346);
+            this.labelStatus.Location = new System.Drawing.Point(7, 381);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(66, 13);
             this.labelStatus.TabIndex = 5;
-            this.labelStatus.Text = "Status: Null";
+            this.labelStatus.Text = "状态: Null";
             // 
             // tabControlMain
             // 
             this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlMain.Controls.Add(this.Plugins);
+            this.tabControlMain.Controls.Add(this.CSTI);
+            this.tabControlMain.Controls.Add(this.CSFF);
             this.tabControlMain.Controls.Add(this.Utilities);
             this.tabControlMain.Enabled = false;
-            this.tabControlMain.Location = new System.Drawing.Point(10, 53);
+            this.tabControlMain.Location = new System.Drawing.Point(10, 98);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(544, 282);
+            this.tabControlMain.Size = new System.Drawing.Size(544, 272);
             this.tabControlMain.TabIndex = 8;
             // 
             // Plugins
             // 
-            this.Plugins.Controls.Add(this.listViewMods);
-            this.Plugins.Location = new System.Drawing.Point(4, 22);
-            this.Plugins.Name = "Plugins";
-            this.Plugins.Padding = new System.Windows.Forms.Padding(3);
-            this.Plugins.Size = new System.Drawing.Size(536, 256);
-            this.Plugins.TabIndex = 0;
-            this.Plugins.Text = "Plugins";
-            this.Plugins.UseVisualStyleBackColor = true;
-            // 
+            this.CSTI.Controls.Add(this.listViewModsCSTI);
+            this.CSTI.Location = new System.Drawing.Point(4, 22);
+            this.CSTI.Name = "CSTI";
+            this.CSTI.Padding = new System.Windows.Forms.Padding(3);
+            this.CSTI.Size = new System.Drawing.Size(536, 256);
+            this.CSTI.TabIndex = 0;
+            this.CSTI.Text = "热带岛屿";
+            this.CSTI.UseVisualStyleBackColor = true;
+	    // 
             // listViewMods
             // 
-            this.listViewMods.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listViewModsCSTI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewMods.CheckBoxes = true;
-            this.listViewMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderName,
-            this.columnHeaderAuthor,
-            this.columnHeaderVersion,
-            this.columnHeaderLocalVersion});
-            this.listViewMods.ContextMenuStrip = this.contextMenuStripMain;
-            this.listViewMods.FullRowSelect = true;
-            this.listViewMods.HideSelection = false;
-            this.listViewMods.Location = new System.Drawing.Point(6, 6);
-            this.listViewMods.Name = "listViewMods";
-            this.listViewMods.Size = new System.Drawing.Size(524, 244);
-            this.listViewMods.TabIndex = 0;
-            this.listViewMods.UseCompatibleStateImageBehavior = false;
-            this.listViewMods.View = System.Windows.Forms.View.Details;
-            this.listViewMods.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewMods_ItemChecked);
+            this.listViewModsCSTI.CheckBoxes = true;
+            this.listViewModsCSTI.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderNameCSTI,
+            this.columnHeaderAuthorCSTI,
+            this.columnHeaderVersionCSTI,
+            this.columnHeaderLocalVersionCSTI});
+            this.listViewModsCSTI.ContextMenuStrip = this.contextMenuStripMain;
+            this.listViewModsCSTI.FullRowSelect = true;
+            this.listViewModsCSTI.HideSelection = false;
+            this.listViewModsCSTI.Location = new System.Drawing.Point(6, 6);
+            this.listViewModsCSTI.Name = "listViewModsCSTI";
+            this.listViewModsCSTI.Size = new System.Drawing.Size(524, 244);
+            this.listViewModsCSTI.TabIndex = 0;
+            this.listViewModsCSTI.UseCompatibleStateImageBehavior = false;
+            this.listViewModsCSTI.View = System.Windows.Forms.View.Details;
+            this.listViewModsCSTI.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewMods_ItemChecked);
             //this.listViewMods.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewMods_ItemSelectionChanged);
-            this.listViewMods.DoubleClick += new System.EventHandler(this.listViewMods_DoubleClick);
+            this.listViewModsCSTI.DoubleClick += new System.EventHandler(this.listViewMods_DoubleClick);
             // 
             // columnHeaderName
             // 
-            this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 200;
+            this.columnHeaderNameCSTI.Text = "名称";
+            this.columnHeaderNameCSTI.Width = 200;
             // 
             // columnHeaderVersion
             // 
-            this.columnHeaderVersion.Text = "Cloud Ver.";
-            this.columnHeaderVersion.Width = 75;
+            this.columnHeaderVersionCSTI.Text = "云端版本";
+            this.columnHeaderVersionCSTI.Width = 75;
             // 
             // columnHeaderLocalVersion
             // 
-            this.columnHeaderLocalVersion.Text = "Local Ver.";
-            this.columnHeaderLocalVersion.Width = 75;
+            this.columnHeaderLocalVersionCSTI.Text = "本地版本";
+            this.columnHeaderLocalVersionCSTI.Width = 75;
             // 
             // columnHeaderAuthor
             // 
-            this.columnHeaderAuthor.Text = "Author";
-            this.columnHeaderAuthor.Width = 125;
+            this.columnHeaderAuthorCSTI.Text = "作者";
+            this.columnHeaderAuthorCSTI.Width = 125;
             // 
             // contextMenuStripMain
             // 
@@ -201,7 +235,7 @@
             // 
             this.viewInfoToolStripMenuItem.Name = "viewInfoToolStripMenuItem";
             this.viewInfoToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.viewInfoToolStripMenuItem.Text = "Look Information";
+            this.viewInfoToolStripMenuItem.Text = "查看信息";
             this.viewInfoToolStripMenuItem.Click += new System.EventHandler(this.viewInfoToolStripMenuItem_Click);
             // 
             // Utilities
@@ -211,16 +245,11 @@
             this.Utilities.Controls.Add(this.buttonOpenWiki);
             this.Utilities.Controls.Add(this.buttonDiscordLink);
             this.Utilities.Controls.Add(this.groupBox1);
-            this.Utilities.Controls.Add(this.buttonRestoreCosmetics);
-            this.Utilities.Controls.Add(this.buttonRestoreMods);
-            this.Utilities.Controls.Add(this.buttonBackupCosmetics);
-            this.Utilities.Controls.Add(this.buttonBackupMods);
-            this.Utilities.Controls.Add(this.buttonUninstallAll);
             this.Utilities.Location = new System.Drawing.Point(4, 22);
             this.Utilities.Name = "Utilities";
             this.Utilities.Size = new System.Drawing.Size(536, 256);
             this.Utilities.TabIndex = 1;
-            this.Utilities.Text = "Utilities";
+            this.Utilities.Text = "杂项";
             this.Utilities.UseVisualStyleBackColor = true;
             // 
             // labelVersion
@@ -231,7 +260,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(119, 13);
             this.labelVersion.TabIndex = 11;
-            this.labelVersion.Text = "CSTI Mod Manager";
+            this.labelVersion.Text = "CS Mod Manager";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.labelVersion.UseMnemonic = false;
             // 
@@ -251,7 +280,7 @@
             this.buttonOpenWiki.Name = "buttonOpenWiki";
             this.buttonOpenWiki.Size = new System.Drawing.Size(134, 23);
             this.buttonOpenWiki.TabIndex = 9;
-            this.buttonOpenWiki.Text = "Look wiki";
+            this.buttonOpenWiki.Text = "查看wiki";
             this.buttonOpenWiki.UseVisualStyleBackColor = true;
             this.buttonOpenWiki.Click += new System.EventHandler(this.buttonOpenWiki_Click);
             // 
@@ -261,15 +290,14 @@
             this.buttonDiscordLink.Name = "buttonDiscordLink";
             this.buttonDiscordLink.Size = new System.Drawing.Size(134, 23);
             this.buttonDiscordLink.TabIndex = 8;
-            this.buttonDiscordLink.Text = "Join Discord!";
+            this.buttonDiscordLink.Text = "加入Discord!";
             this.buttonDiscordLink.UseVisualStyleBackColor = true;
             this.buttonDiscordLink.Click += new System.EventHandler(this.buttonDiscordLink_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.buttonBepInEx);
-            this.groupBox1.Controls.Add(this.buttonOpenConfig);
-            this.groupBox1.Controls.Add(this.buttonOpenGameFolder);
+            this.groupBox1.Controls.Add(this.buttonOpenLogFolderCSFF);
+            this.groupBox1.Controls.Add(this.buttonOpenLogFolderCSTI);
             this.groupBox1.Controls.Add(this.labelOpen);
             this.groupBox1.Location = new System.Drawing.Point(373, 16);
             this.groupBox1.Name = "groupBox1";
@@ -277,35 +305,25 @@
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
-            // buttonBepInEx
+            // buttonOpenLogFolderCSFF
             // 
-            this.buttonBepInEx.Location = new System.Drawing.Point(6, 96);
-            this.buttonBepInEx.Name = "buttonBepInEx";
-            this.buttonBepInEx.Size = new System.Drawing.Size(134, 23);
-            this.buttonBepInEx.TabIndex = 5;
-            this.buttonBepInEx.Text = "BepInEx Path";
-            this.buttonBepInEx.UseVisualStyleBackColor = true;
-            this.buttonBepInEx.Click += new System.EventHandler(this.buttonOpenBepInExFolder_Click);
+            this.buttonOpenLogFolderCSFF.Location = new System.Drawing.Point(6, 67);
+            this.buttonOpenLogFolderCSFF.Name = "buttonOpenLogFolderCSFF";
+            this.buttonOpenLogFolderCSFF.Size = new System.Drawing.Size(134, 23);
+            this.buttonOpenLogFolderCSFF.TabIndex = 5;
+            this.buttonOpenLogFolderCSFF.Text = "奇幻森林log目录";
+            this.buttonOpenLogFolderCSFF.UseVisualStyleBackColor = true;
+            this.buttonOpenLogFolderCSFF.Click += new System.EventHandler(this.buttonOpenLogFolderCSFF_Click);
             // 
-            // buttonOpenConfig
+            // buttonOpenLogFolderCSTI
             // 
-            this.buttonOpenConfig.Location = new System.Drawing.Point(6, 67);
-            this.buttonOpenConfig.Name = "buttonOpenConfig";
-            this.buttonOpenConfig.Size = new System.Drawing.Size(134, 23);
-            this.buttonOpenConfig.TabIndex = 5;
-            this.buttonOpenConfig.Text = "Log Path";
-            this.buttonOpenConfig.UseVisualStyleBackColor = true;
-            this.buttonOpenConfig.Click += new System.EventHandler(this.buttonOpenConfigFolder_Click);
-            // 
-            // buttonOpenGameFolder
-            // 
-            this.buttonOpenGameFolder.Location = new System.Drawing.Point(6, 38);
-            this.buttonOpenGameFolder.Name = "buttonOpenGameFolder";
-            this.buttonOpenGameFolder.Size = new System.Drawing.Size(134, 23);
-            this.buttonOpenGameFolder.TabIndex = 5;
-            this.buttonOpenGameFolder.Text = "Game Path";
-            this.buttonOpenGameFolder.UseVisualStyleBackColor = true;
-            this.buttonOpenGameFolder.Click += new System.EventHandler(this.buttonOpenGameFolder_Click);
+            this.buttonOpenLogFolderCSTI.Location = new System.Drawing.Point(6, 38);
+            this.buttonOpenLogFolderCSTI.Name = "buttonOpenLogFolderCSTI";
+            this.buttonOpenLogFolderCSTI.Size = new System.Drawing.Size(134, 23);
+            this.buttonOpenLogFolderCSTI.TabIndex = 5;
+            this.buttonOpenLogFolderCSTI.Text = "热带岛屿log目录";
+            this.buttonOpenLogFolderCSTI.UseVisualStyleBackColor = true;
+            this.buttonOpenLogFolderCSTI.Click += new System.EventHandler(this.buttonOpenLogFolderCSTI_Click);
             // 
             // labelOpen
             // 
@@ -314,67 +332,17 @@
             this.labelOpen.Name = "labelOpen";
             this.labelOpen.Size = new System.Drawing.Size(99, 13);
             this.labelOpen.TabIndex = 6;
-            this.labelOpen.Text = "Important Path";
-            // 
-            // buttonRestoreCosmetics
-            // 
-            this.buttonRestoreCosmetics.Location = new System.Drawing.Point(14, 173);
-            this.buttonRestoreCosmetics.Name = "buttonRestoreCosmetics";
-            this.buttonRestoreCosmetics.Size = new System.Drawing.Size(132, 37);
-            this.buttonRestoreCosmetics.TabIndex = 4;
-            this.buttonRestoreCosmetics.Text = "None";
-            this.buttonRestoreCosmetics.UseVisualStyleBackColor = true;
-            this.buttonRestoreCosmetics.Click += new System.EventHandler(this.buttonRestoreCosmetics_Click);
-            // 
-            // buttonRestoreMods
-            // 
-            this.buttonRestoreMods.Location = new System.Drawing.Point(14, 130);
-            this.buttonRestoreMods.Name = "buttonRestoreMods";
-            this.buttonRestoreMods.Size = new System.Drawing.Size(132, 37);
-            this.buttonRestoreMods.TabIndex = 3;
-            this.buttonRestoreMods.Text = "Restore Mods from Backup";
-            this.buttonRestoreMods.UseVisualStyleBackColor = true;
-            this.buttonRestoreMods.Click += new System.EventHandler(this.buttonRestoreMods_Click);
-            // 
-            // buttonBackupCosmetics
-            // 
-            this.buttonBackupCosmetics.Location = new System.Drawing.Point(14, 101);
-            this.buttonBackupCosmetics.Name = "buttonBackupCosmetics";
-            this.buttonBackupCosmetics.Size = new System.Drawing.Size(132, 23);
-            this.buttonBackupCosmetics.TabIndex = 2;
-            this.buttonBackupCosmetics.Text = "None";
-            this.buttonBackupCosmetics.UseVisualStyleBackColor = true;
-            this.buttonBackupCosmetics.Click += new System.EventHandler(this.buttonBackupCosmetics_Click);
-            // 
-            // buttonBackupMods
-            // 
-            this.buttonBackupMods.Location = new System.Drawing.Point(14, 72);
-            this.buttonBackupMods.Name = "buttonBackupMods";
-            this.buttonBackupMods.Size = new System.Drawing.Size(132, 23);
-            this.buttonBackupMods.TabIndex = 1;
-            this.buttonBackupMods.Text = "Backup Mods";
-            this.buttonBackupMods.UseVisualStyleBackColor = true;
-            this.buttonBackupMods.Click += new System.EventHandler(this.buttonBackupMods_Click);
-            // 
-            // buttonUninstallAll
-            // 
-            this.buttonUninstallAll.Location = new System.Drawing.Point(14, 43);
-            this.buttonUninstallAll.Name = "buttonUninstallAll";
-            this.buttonUninstallAll.Size = new System.Drawing.Size(132, 23);
-            this.buttonUninstallAll.TabIndex = 0;
-            this.buttonUninstallAll.Text = "Delete All Mods";
-            this.buttonUninstallAll.UseVisualStyleBackColor = true;
-            this.buttonUninstallAll.Click += new System.EventHandler(this.buttonUninstallAll_Click);
+            this.labelOpen.Text = "重要路径";
             // 
             // buttonModInfo
             // 
             this.buttonModInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonModInfo.Enabled = false;
-            this.buttonModInfo.Location = new System.Drawing.Point(322, 341);
+            this.buttonModInfo.Location = new System.Drawing.Point(322, 376);
             this.buttonModInfo.Name = "buttonModInfo";
             this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
             this.buttonModInfo.TabIndex = 9;
-            this.buttonModInfo.Text = "Delete Mods";
+            this.buttonModInfo.Text = "删除Mods";
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
@@ -382,11 +350,11 @@
             // 
             this.buttonToggleMods.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonToggleMods.Enabled = false;
-            this.buttonToggleMods.Location = new System.Drawing.Point(204, 341);
+            this.buttonToggleMods.Location = new System.Drawing.Point(204, 376);
             this.buttonToggleMods.Name = "buttonToggleMods";
             this.buttonToggleMods.Size = new System.Drawing.Size(112, 23);
             this.buttonToggleMods.TabIndex = 10;
-            this.buttonToggleMods.Text = "Disable/Enable Mods";
+            this.buttonToggleMods.Text = "禁用/启用Mods";
             this.buttonToggleMods.UseVisualStyleBackColor = true;
             this.buttonToggleMods.Click += new System.EventHandler(this.buttonToggleMods_Click);
             // 
@@ -394,7 +362,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 376);
+            this.ClientSize = new System.Drawing.Size(566, 411);
             this.Controls.Add(this.buttonToggleMods);
             this.Controls.Add(this.buttonModInfo);
             this.Controls.Add(this.tabControlMain);
@@ -403,14 +371,17 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonFolderBrowser);
             this.Controls.Add(this.textBoxDirectory);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.buttonFolderBrowser2);
+            this.Controls.Add(this.textBoxDirectory2);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CSTI Mod Manager";
+            this.Text = "CS Mod Manager";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControlMain.ResumeLayout(false);
-            this.Plugins.ResumeLayout(false);
+            this.CSTI.ResumeLayout(false);
             this.contextMenuStripMain.ResumeLayout(false);
             this.Utilities.ResumeLayout(false);
             this.Utilities.PerformLayout();
@@ -419,37 +390,85 @@
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            // 
+            // Skins (新增的页面)
+            // 
+            this.CSFF.Controls.Add(this.listViewModsCSFF); // 使用新的ListView
+            this.CSFF.Location = new System.Drawing.Point(4, 22);
+            this.CSFF.Name = "CSFF";
+            this.CSFF.Padding = new System.Windows.Forms.Padding(3);
+            this.CSFF.Size = new System.Drawing.Size(536, 256);
+            this.CSFF.TabIndex = 2; // 注意索引号变化
+            this.CSFF.Text = "奇幻森林"; // 标签页标题
+            this.CSFF.UseVisualStyleBackColor = true;
+            // 
+            // listViewSkins (新增的ListView控件)
+            // 
+            this.listViewModsCSFF.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewModsCSFF.CheckBoxes = true;
+            this.listViewModsCSFF.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderNameCSFF,
+            this.columnHeaderAuthorCSFF,
+            this.columnHeaderVersionCSFF,
+            this.columnHeaderLocalVersionCSFF});
+            this.listViewModsCSFF.ContextMenuStrip = this.contextMenuStripMain; // 使用相同的上下文菜单
+            this.listViewModsCSFF.FullRowSelect = true;
+            this.listViewModsCSFF.HideSelection = false;
+            this.listViewModsCSFF.Location = new System.Drawing.Point(6, 6);
+            this.listViewModsCSFF.Name = "listViewModsCSFF";
+            this.listViewModsCSFF.Size = new System.Drawing.Size(524, 244);
+            this.listViewModsCSFF.TabIndex = 0;
+            this.listViewModsCSFF.UseCompatibleStateImageBehavior = false;
+            this.listViewModsCSFF.View = System.Windows.Forms.View.Details;
+            // 绑定相同的事件处理程序
+            this.listViewModsCSFF.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewMods_ItemChecked);
+            this.listViewModsCSFF.DoubleClick += new System.EventHandler(this.listViewMods_DoubleClick);
+            
+            // 列标题文本
+            this.columnHeaderNameCSFF.Text = "名称";
+            this.columnHeaderNameCSFF.Width = 200;
+            this.columnHeaderAuthorCSFF.Text = "作者";
+            this.columnHeaderAuthorCSFF.Width = 125;
+            this.columnHeaderVersionCSFF.Text = "云端版本";
+            this.columnHeaderVersionCSFF.Width = 75;
+            this.columnHeaderLocalVersionCSFF.Text = "本地版本";
+            this.columnHeaderLocalVersionCSFF.Width = 75;
+            
+            this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
         }
 
         #endregion
-
+        private System.Windows.Forms.TabPage CSFF;
+        private System.Windows.Forms.ListView listViewModsCSFF;
+        private System.Windows.Forms.ColumnHeader columnHeaderNameCSFF;
+        private System.Windows.Forms.ColumnHeader columnHeaderAuthorCSFF;
+        private System.Windows.Forms.ColumnHeader columnHeaderVersionCSFF;
+        private System.Windows.Forms.ColumnHeader columnHeaderLocalVersionCSFF;
         private System.Windows.Forms.TextBox textBoxDirectory;
+        private System.Windows.Forms.TextBox textBoxDirectory2;
         private System.Windows.Forms.Button buttonFolderBrowser;
+        private System.Windows.Forms.Button buttonFolderBrowser2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonInstall;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.TabControl tabControlMain;
-        private System.Windows.Forms.TabPage Plugins;
-        private System.Windows.Forms.ListView listViewMods;
-        private System.Windows.Forms.ColumnHeader columnHeaderName;
-        private System.Windows.Forms.ColumnHeader columnHeaderVersion;
-        private System.Windows.Forms.ColumnHeader columnHeaderLocalVersion;
-        private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
+        private System.Windows.Forms.TabPage CSTI;
+        private System.Windows.Forms.ListView listViewModsCSTI;
+        private System.Windows.Forms.ColumnHeader columnHeaderNameCSTI;
+        private System.Windows.Forms.ColumnHeader columnHeaderVersionCSTI;
+        private System.Windows.Forms.ColumnHeader columnHeaderLocalVersionCSTI;
+        private System.Windows.Forms.ColumnHeader columnHeaderAuthorCSTI;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
         private System.Windows.Forms.ToolStripMenuItem viewInfoToolStripMenuItem;
         private System.Windows.Forms.Button buttonModInfo;
         private System.Windows.Forms.TabPage Utilities;
-        private System.Windows.Forms.Button buttonUninstallAll;
-        private System.Windows.Forms.Button buttonBackupMods;
-        private System.Windows.Forms.Button buttonBackupCosmetics;
-        private System.Windows.Forms.Button buttonRestoreMods;
-        private System.Windows.Forms.Button buttonRestoreCosmetics;
         private System.Windows.Forms.Label labelOpen;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button buttonBepInEx;
-        private System.Windows.Forms.Button buttonOpenConfig;
-        private System.Windows.Forms.Button buttonOpenGameFolder;
+        private System.Windows.Forms.Button buttonOpenLogFolderCSFF;
+        private System.Windows.Forms.Button buttonOpenLogFolderCSTI;
         private System.Windows.Forms.Button buttonOpenWiki;
         private System.Windows.Forms.Button buttonDiscordLink;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -457,4 +476,3 @@
         private System.Windows.Forms.Button buttonToggleMods;
     }
 }
-
