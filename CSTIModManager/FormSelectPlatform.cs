@@ -19,7 +19,7 @@ namespace CSTIModManager
             {
                 Parent.isSteam = false;
             }
-            this.Close();
+            Close();
         }
     }
 }

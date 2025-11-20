@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -124,13 +125,6 @@ namespace CSTIModManager.Internals
    * SOFTWARE.
    * 
    * * * * */
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
-
     namespace SimpleJSON
     {
         public enum JSONNodeType
@@ -150,7 +144,7 @@ namespace CSTIModManager.Internals
             Indent
         }
 
-        public abstract partial class JSONNode
+        public abstract class JSONNode
         {
             #region Enumerators
             public struct Enumerator
@@ -178,7 +172,7 @@ namespace CSTIModManager.Internals
                     {
                         if (type == Type.Array)
                             return new KeyValuePair<string, JSONNode>(string.Empty, m_Array.Current);
-                        else if (type == Type.Object)
+                        if (type == Type.Object)
                             return m_Object.Current;
                         return new KeyValuePair<string, JSONNode>(string.Empty, null);
                     }
@@ -187,7 +181,7 @@ namespace CSTIModManager.Internals
                 {
                     if (type == Type.Array)
                         return m_Array.MoveNext();
-                    else if (type == Type.Object)
+                    if (type == Type.Object)
                         return m_Object.MoveNext();
                     return false;
                 }
@@ -579,8 +573,7 @@ namespace CSTIModManager.Internals
                 double val;
                 if (double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out val))
                     return val;
-                else
-                    return token;
+                return token;
             }
 
             public static JSONNode Parse(string aJSON)
@@ -717,7 +710,7 @@ namespace CSTIModManager.Internals
                                             string s = aJSON.Substring(i + 1, 4);
                                             Token.Append((char)int.Parse(
                                                 s,
-                                                System.Globalization.NumberStyles.AllowHexSpecifier));
+                                                NumberStyles.AllowHexSpecifier));
                                             i += 4;
                                             break;
                                         }
@@ -746,10 +739,10 @@ namespace CSTIModManager.Internals
         }
         // End of JSONNode
 
-        public partial class JSONArray : JSONNode
+        public class JSONArray : JSONNode
         {
             private List<JSONNode> m_List = new List<JSONNode>();
-            private bool inline = false;
+            private bool inline;
             public override bool Inline
             {
                 get { return inline; }
@@ -851,11 +844,11 @@ namespace CSTIModManager.Internals
         }
         // End of JSONArray
 
-        public partial class JSONObject : JSONNode
+        public class JSONObject : JSONNode
         {
             private Dictionary<string, JSONNode> m_Dict = new Dictionary<string, JSONNode>();
 
-            private bool inline = false;
+            private bool inline;
             public override bool Inline
             {
                 get { return inline; }
@@ -874,8 +867,7 @@ namespace CSTIModManager.Internals
                 {
                     if (m_Dict.ContainsKey(aKey))
                         return m_Dict[aKey];
-                    else
-                        return new JSONLazyCreator(this, aKey);
+                    return new JSONLazyCreator(this, aKey);
                 }
                 set
                 {
@@ -999,7 +991,7 @@ namespace CSTIModManager.Internals
         }
         // End of JSONObject
 
-        public partial class JSONString : JSONNode
+        public class JSONString : JSONNode
         {
             private string m_Data;
 
@@ -1046,7 +1038,7 @@ namespace CSTIModManager.Internals
         }
         // End of JSONString
 
-        public partial class JSONNumber : JSONNode
+        public class JSONNumber : JSONNode
         {
             private double m_Data;
 
@@ -1119,7 +1111,7 @@ namespace CSTIModManager.Internals
         }
         // End of JSONNumber
 
-        public partial class JSONBool : JSONNode
+        public class JSONBool : JSONNode
         {
             private bool m_Data;
 
@@ -1172,7 +1164,7 @@ namespace CSTIModManager.Internals
         }
         // End of JSONBool
 
-        public partial class JSONNull : JSONNode
+        public class JSONNull : JSONNode
         {
             static JSONNull m_StaticInstance = new JSONNull();
             public static bool reuseSameInstance = true;
@@ -1201,7 +1193,7 @@ namespace CSTIModManager.Internals
 
             public override bool Equals(object obj)
             {
-                if (object.ReferenceEquals(this, obj))
+                if (ReferenceEquals(this, obj))
                     return true;
                 return (obj is JSONNull);
             }
@@ -1217,10 +1209,10 @@ namespace CSTIModManager.Internals
         }
         // End of JSONNull
 
-        internal partial class JSONLazyCreator : JSONNode
+        internal class JSONLazyCreator : JSONNode
         {
-            private JSONNode m_Node = null;
-            private string m_Key = null;
+            private JSONNode m_Node;
+            private string m_Key;
             public override JSONNodeType Tag { get { return JSONNodeType.None; } }
             public override Enumerator GetEnumerator() { return new Enumerator(); }
 
@@ -1272,7 +1264,7 @@ namespace CSTIModManager.Internals
             {
                 if (b == null)
                     return true;
-                return System.Object.ReferenceEquals(a, b);
+                return ReferenceEquals(a, b);
             }
 
             public static bool operator !=(JSONLazyCreator a, object b)
@@ -1284,7 +1276,7 @@ namespace CSTIModManager.Internals
             {
                 if (obj == null)
                     return true;
-                return System.Object.ReferenceEquals(this, obj);
+                return ReferenceEquals(this, obj);
             }
 
             public override int GetHashCode()

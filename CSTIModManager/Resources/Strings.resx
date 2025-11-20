@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Disabled" xml:space="preserve">
+        <value>(Disabled)</value>
+    </data>
+    <data name="Get MOD Information" xml:space="preserve">
+        <value>Retrieving mod information...</value>
+    </data>
+    <data name="Installed" xml:space="preserve">
+        <value>(Installed)</value>
+    </data>
+    <data name="Mod information retrieved successfully" xml:space="preserve">
+        <value>Mod information retrieved successfully!</value>
+    </data>
+    <data name="Game path not specified" xml:space="preserve">
+        <value>Game path not specified</value>
+    </data>
+    <data name="Start installation queue" xml:space="preserve">
+        <value>Starting installation queue...</value>
+    </data>
+    <data name="Downloading" xml:space="preserve">
+        <value>Downloading...</value>
+    </data>
+    <data name="Installing" xml:space="preserve">
+        <value>Installing...</value>
+    </data>
+    <data name="Installation complete" xml:space="preserve">
+        <value>Installation complete!</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Error!</value>
+    </data>
+    <data name="Not CSTI" xml:space="preserve">
+        <value>This is not Card Survival - Tropical Island.exe! Please try again!</value>
+    </data>
+    <data name="Not CSFF" xml:space="preserve">
+        <value>This is not Card Survival - Fantasy Forest.exe! Please try again!</value>
+    </data>
+    <data name="Cant find log" xml:space="preserve">
+        <value>Can not find Player.log</value>
+    </data>
+    <data name="Cant load log" xml:space="preserve">
+        <value>Player.log is null</value>
+    </data>
+    <data name="Cant load path from log" xml:space="preserve">
+        <value>Can not load game path from Player.log</value>
+    </data>
+    <data name="Game path does not exist" xml:space="preserve">
+        <value>The game path does not exist.</value>
+    </data>
+    <data name="Delete Mod" xml:space="preserve">
+        <value>You are attempting to delete the selected Mods files. This action cannot be undone!\n\nAre you sure you want to proceed?</value>
+    </data>
+    <data name="Confirm deletion" xml:space="preserve">
+        <value>Confirm deletion</value>
+    </data>
+    <data name="Deleting Mod" xml:space="preserve">
+        <value>Delete Mod!</value>
+    </data>
+    <data name="Delete Mod success" xml:space="preserve">
+        <value>Delete Success!</value>
+    </data>
+    <data name="Get update error" xml:space="preserve">
+        <value>Failed to retrieve update information. Please try again later.</value>
+    </data>
+    <data name="Get update net error" xml:space="preserve">
+        <value>Failed to retrieve update information. Please check your network connection.</value>
+    </data>
+    <data name="Downloading information" xml:space="preserve">
+        <value>Downloading: </value>
+    </data>
+    <data name="Downloaded" xml:space="preserve">
+        <value>Downloaded:</value>
+    </data>
+    <data name="Connect to server" xml:space="preserve">
+        <value>Connecting to server...</value>
+    </data>
+    <data name="File size" xml:space="preserve">
+        <value>File size: </value>
+    </data>
+    <data name="Cant get file size" xml:space="preserve">
+        <value>Can not get file size</value>
+    </data>
+    <data name="Download success" xml:space="preserve">
+        <value>Download success!</value>
+    </data>
+    <data name="Download failed" xml:space="preserve">
+        <value>Download failed:</value>
+    </data>
+    <data name="Checking update" xml:space="preserve">
+        <value>Checking for updates...</value>
+    </data>
+    <data name="Check update success text" xml:space="preserve">
+        <value>A version update has been detected. Please use the new version.</value>
+    </data>
+    <data name="Check update success title" xml:space="preserve">
+        <value>A new update is available!</value>
+    </data>
+    <data name="Gitee" xml:space="preserve">
+        <value>https://gitee.com/Cold_winds/cstimod-manager/releases/latest</value>
+    </data>
+    <data name="Github" xml:space="preserve">
+        <value>https://github.com/Coldwinds5167/CSTIModManager/releases/latest</value>
+    </data>
+    <data name="Cant find bepinex text" xml:space="preserve">
+        <value>BepInEx not detected!\n\nInstall?</value>
+    </data>
+    <data name="Cant find bepinex title" xml:space="preserve">
+        <value>BepInEx not detected</value>
+    </data>
+    <data name="Install Bepinex hint" xml:space="preserve">
+        <value>The game will launch once during installation. Please wait until the game has finished loading before closing it! Do you want to continue?</value>
+    </data>
+    <data name="Hint" xml:space="preserve">
+        <value>Hint</value>
+    </data>
+    <data name="Installing bepinex" xml:space="preserve">
+        <value>Installing...BepInEx</value>
+    </data>
+    <data name="User canceled the operation" xml:space="preserve">
+        <value>User canceled the operation</value>
+    </data>
+    <data name="Get CSTI path error" xml:space="preserve">
+        <value>Automatic detection of tropical island game path failed. Please add it manually later.</value>
+    </data>
+    <data name="Get CSFF path error" xml:space="preserve">
+        <value>Automatic detection of the Fantasy Forest game path failed. Please add it manually later.</value>
+    </data>
+    <data name="Enable Mod" xml:space="preserve">
+        <value>Enable Mod!</value>
+    </data>
+    <data name="Disable Mod" xml:space="preserve">
+        <value>Disable Mod!</value>
+    </data>
+    <data name="label1.Text" xml:space="preserve">
+        <value>CSTI Game Path:</value>
+    </data>
+    <data name="label2.Text" xml:space="preserve">
+        <value>CSFF Game Path:</value>
+    </data>
+    <data name="buttonInstall.Text" xml:space="preserve">
+        <value>Install/Update</value>
+    </data>
+    <data name="labelStatus.Text" xml:space="preserve">
+        <value>Status: null</value>
+    </data>
+    <data name="CSTI.Text" xml:space="preserve">
+        <value>Tropical Island</value>
+    </data>
+    <data name="columnHeaderNameCSTI.Text" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="columnHeaderVersionCSTI.Text" xml:space="preserve">
+        <value>Server Version</value>
+    </data>
+    <data name="columnHeaderLocalVersionCSTI.Text" xml:space="preserve">
+        <value>Local Version</value>
+    </data>
+    <data name="columnHeaderAuthorCSTI.Text" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="viewInfoToolStripMenuItem.Text" xml:space="preserve">
+        <value>View Information</value>
+    </data>
+    <data name="Utilities.Text" xml:space="preserve">
+        <value>Utilities</value>
+    </data>
+    <data name="buttonOpenWiki.Text" xml:space="preserve">
+        <value>Open Wiki</value>
+    </data>
+    <data name="buttonDiscordLink.Text" xml:space="preserve">
+        <value>Join Discord</value>
+    </data>
+    <data name="buttonOpenLogFolderCSFF.Text" xml:space="preserve">
+        <value>CSFF log path</value>
+    </data>
+    <data name="buttonOpenLogFolderCSTI.Text" xml:space="preserve">
+        <value>CSTI log path</value>
+    </data>
+    <data name="labelOpen.Text" xml:space="preserve">
+        <value>Important Path</value>
+    </data>
+    <data name="buttonModInfo.Text" xml:space="preserve">
+        <value>Delete Mod</value>
+    </data>
+    <data name="buttonToggleMods.Text" xml:space="preserve">
+        <value>Enable/Disable</value>
+    </data>
+    <data name="CSFF.Text" xml:space="preserve">
+        <value>Fantasy Forest</value>
+    </data>
+    <data name="columnHeaderNameCSFF.Text" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="columnHeaderAuthorCSFF.Text" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="columnHeaderVersionCSFF.Text" xml:space="preserve">
+        <value>Server Version</value>
+    </data>
+    <data name="columnHeaderLocalVersionCSFF.Text" xml:space="preserve">
+        <value>Local Version</value>
+    </data>
+</root>

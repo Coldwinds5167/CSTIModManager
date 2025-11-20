@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using CSTIModManager.Internals.SimpleJSON;
 
 namespace CSTIModManager.Internals
@@ -23,8 +20,8 @@ namespace CSTIModManager.Internals
         public bool Install = true;
         public bool isInstalled = false;
         public bool isable = true;
-        public bool ContainDll = false;
-        public bool OnlyDll = false;
+        public bool ContainDll;
+        public bool OnlyDll;
         public List<string> Dependencies = new List<string>();
         public List<string> Dependents = new List<string>();
         public ReleaseInfo(string _name, string _modname, string _author, string _version, string _group, string _link, string _installLocation, string _gitPath, JSONArray dependencies, bool _containdll, bool _onlydll)
